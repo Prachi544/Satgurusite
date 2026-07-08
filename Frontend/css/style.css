@@ -1,0 +1,451 @@
+/* =========================================================
+   Panditji Online — Shared Stylesheet
+   Design tokens live at the top. Change once, apply everywhere.
+========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Tiro+Devanagari+Hindi&family=Karla:wght@400;500;600;700&display=swap');
+
+:root{
+  /* --- Color tokens --- */
+  --color-bg:        #FBF6EC; /* sandalwood ivory page background */
+  --color-card:      #FFFDF8; /* slightly lighter card surface */
+  --color-ink:       #2B1B14; /* deep temple-wood, primary text */
+  --color-ink-soft:  #6B564C; /* softened brown for secondary text */
+  --color-primary:   #B23A2E; /* sindoor red — main accent / CTAs */
+  --color-primary-dark:#8C2C22;
+  --color-gold:      #C68A1D; /* turmeric gold — secondary accent */
+  --color-marigold:  #E8862E; /* marigold orange — highlights */
+  --color-deep:       #3B1220; /* deep maroon-plum — dark bands, footer */
+  --color-deep-ink:   #F3E6D8; /* text on dark bands */
+  --color-border:     #E7DCC8;
+
+  /* --- Type tokens --- */
+  --font-display: 'Marcellus', 'Georgia', serif;
+  --font-devanagari: 'Tiro Devanagari Hindi', serif;
+  --font-body: 'Karla', -apple-system, sans-serif;
+
+  /* --- Layout tokens --- */
+  --max-width: 1180px;
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --arch-radius: 120px;
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{ scroll-behavior: smooth; }
+
+body{
+  margin:0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img{ max-width:100%; display:block; }
+
+a{ color: inherit; text-decoration: none; }
+
+.container{
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+h1,h2,h3,h4{
+  font-family: var(--font-display);
+  color: var(--color-ink);
+  margin: 0 0 .5em;
+  line-height: 1.15;
+  font-weight: 400;
+}
+
+.eyebrow{
+  font-family: var(--font-devanagari);
+  color: var(--color-primary);
+  font-size: 1.05rem;
+  letter-spacing: .04em;
+  display:block;
+  margin-bottom: .4em;
+}
+
+p{ margin:0 0 1em; }
+
+/* Visible keyboard focus everywhere */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible{
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior:auto !important; }
+}
+
+/* =========================================================
+   Marigold garland rule — thin decorative divider, our
+   recurring signature motif (a strung garland, not a line)
+========================================================= */
+.garland-rule{
+  width:100%;
+  height: 14px;
+  background-image: radial-gradient(circle, var(--color-marigold) 0 4px, transparent 4.5px);
+  background-size: 22px 14px;
+  background-repeat: repeat-x;
+  background-position: center;
+  opacity: .8;
+}
+
+/* =========================================================
+   Header / Navigation
+========================================================= */
+.site-header{
+  position: sticky; top:0; z-index: 50;
+  background: rgba(251,246,236,.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav-bar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px 24px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.brand{
+  display:flex; align-items:center; gap:10px;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--color-primary-dark);
+}
+.brand .brand-mark{
+  width: 38px; height: 38px; flex-shrink:0;
+}
+
+.nav-links{
+  display:flex; align-items:center; gap: 28px;
+  list-style:none; margin:0; padding:0;
+  font-weight: 600; font-size: .96rem;
+}
+.nav-links a{
+  color: var(--color-ink);
+  position:relative;
+  padding: 4px 0;
+}
+.nav-links a::after{
+  content:"";
+  position:absolute; left:0; bottom:-2px;
+  width:0; height:2px; background: var(--color-primary);
+  transition: width .2s ease;
+}
+.nav-links a:hover::after, .nav-links a[aria-current="page"]::after{ width:100%; }
+.nav-links a[aria-current="page"]{ color: var(--color-primary-dark); }
+
+.has-dropdown{ position:relative; }
+.dropdown{
+  display:none;
+  position:absolute; top: 130%; left:0;
+  background: var(--color-card);
+  border:1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 12px 30px rgba(43,27,20,.12);
+  min-width: 230px;
+  padding: 8px;
+}
+.has-dropdown:hover .dropdown,
+.has-dropdown:focus-within .dropdown{ display:block; }
+.dropdown a{
+  display:block; padding: 10px 12px; border-radius: 6px; font-weight:500;
+}
+.dropdown a:hover{ background: var(--color-bg); }
+
+.btn-book-nav{
+  background: var(--color-primary);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight:700;
+  white-space:nowrap;
+}
+.btn-book-nav:hover{ background: var(--color-primary-dark); }
+
+.nav-toggle{
+  display:none;
+  background:none; border:none; cursor:pointer;
+  font-size: 1.6rem; color: var(--color-ink);
+}
+
+@media (max-width: 900px){
+  .nav-toggle{ display:block; }
+  .nav-links{
+    display:none;
+    position:absolute; top:100%; left:0; right:0;
+    flex-direction:column; align-items:flex-start;
+    background: var(--color-bg);
+    border-bottom:1px solid var(--color-border);
+    padding: 16px 24px 24px;
+    gap: 14px;
+  }
+  .nav-links.open{ display:flex; }
+  .dropdown{ position:static; box-shadow:none; border:none; display:block; padding-left:12px; }
+  .has-dropdown:hover .dropdown, .has-dropdown:focus-within .dropdown{ display:block; }
+}
+
+/* =========================================================
+   Hero — arch (torana) frame, our signature shape
+========================================================= */
+.hero{
+  position:relative;
+  padding: 64px 0 40px;
+  overflow:hidden;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 48px;
+  align-items:center;
+}
+
+.hero-copy .eyebrow{ font-size: 1.2rem; }
+.hero-copy h1{
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  max-width: 14ch;
+}
+.hero-copy .lede{
+  color: var(--color-ink-soft);
+  font-size: 1.1rem;
+  max-width: 46ch;
+}
+
+.hero-actions{ display:flex; gap:16px; flex-wrap:wrap; margin-top: 8px; }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight:700;
+  font-size: 1rem;
+  cursor:pointer;
+  border: 2px solid transparent;
+  transition: transform .15s ease, background .15s ease;
+}
+.btn:hover{ transform: translateY(-2px); }
+.btn-primary{ background: var(--color-primary); color:#fff; }
+.btn-primary:hover{ background: var(--color-primary-dark); }
+.btn-outline{ border-color: var(--color-ink); color: var(--color-ink); background:transparent; }
+.btn-outline:hover{ background: var(--color-ink); color:#fff; }
+
+.trust-row{
+  display:flex; gap: 28px; flex-wrap:wrap;
+  margin-top: 30px;
+  font-size:.92rem;
+  color: var(--color-ink-soft);
+}
+.trust-row strong{ display:block; color:var(--color-ink); font-family: var(--font-display); font-size:1.3rem; }
+
+/* The arch frame itself */
+.hero-arch{
+  position:relative;
+  clip-path: path('M0,400 L0,140 C0,60 60,0 150,0 L150,0 C240,0 300,60 300,140 L300,400 Z');
+  width:100%;
+  aspect-ratio: 3 / 4;
+  max-width: 420px;
+  margin-left:auto;
+  background: var(--color-gold);
+}
+.hero-arch img{
+  width:100%; height:100%; object-fit:cover;
+}
+.hero-arch::after{
+  content:"";
+  position:absolute; inset:0;
+  box-shadow: inset 0 0 0 10px var(--color-bg), inset 0 0 0 16px var(--color-gold);
+  pointer-events:none;
+}
+
+@media (max-width: 900px){
+  .hero-grid{ grid-template-columns: 1fr; }
+  .hero-arch{ margin: 0 auto; order:-1; }
+}
+
+/* =========================================================
+   Section scaffolding
+========================================================= */
+.section{ padding: 72px 0; }
+.section-deep{
+  background: var(--color-deep);
+  color: var(--color-deep-ink);
+}
+.section-deep h2, .section-deep .eyebrow{ color: var(--color-deep-ink); }
+.section-deep .eyebrow{ color: var(--color-marigold); }
+
+.section-head{
+  max-width: 640px;
+  margin-bottom: 44px;
+}
+.section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+/* =========================================================
+   Cards — services / features
+========================================================= */
+.grid{
+  display:grid;
+  gap: 26px;
+}
+.grid-3{ grid-template-columns: repeat(3, 1fr); }
+.grid-2{ grid-template-columns: repeat(2, 1fr); }
+
+@media (max-width: 900px){
+  .grid-3, .grid-2{ grid-template-columns: 1fr; }
+}
+
+.card{
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.card:hover{ box-shadow: 0 16px 34px rgba(43,27,20,.1); transform: translateY(-3px); }
+
+.service-card{
+  display:flex; flex-direction:column; gap:14px;
+}
+.service-card .thumb{
+  width:100%; aspect-ratio: 4/3; border-radius: var(--radius-sm);
+  overflow:hidden; background: var(--color-border);
+}
+.service-card h3{ font-size:1.25rem; }
+.service-card .tag{
+  font-size:.78rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+  color: var(--color-primary);
+}
+.service-card .card-actions{
+  display:flex; gap:12px; margin-top:auto; padding-top:8px;
+  flex-wrap:wrap;
+}
+.link-arrow{ font-weight:700; color: var(--color-primary-dark); }
+.link-arrow::after{ content:" →"; }
+
+.btn-sm{
+  padding: 9px 18px; font-size:.9rem;
+}
+
+/* =========================================================
+   Testimonials
+========================================================= */
+.testimonial{
+  background: var(--color-card);
+  border-left: 4px solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  padding: 22px 24px;
+}
+.testimonial p{ font-style: italic; color: var(--color-ink-soft); }
+.testimonial .who{ font-weight:700; font-style:normal; color:var(--color-ink); }
+
+/* =========================================================
+   CTA banner
+========================================================= */
+.cta-banner{
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color:#fff;
+  border-radius: var(--radius-md);
+  padding: 48px;
+  display:flex; align-items:center; justify-content:space-between;
+  gap: 24px; flex-wrap:wrap;
+}
+.cta-banner h2{ color:#fff; }
+.cta-banner .btn-outline{ border-color:#fff; color:#fff; }
+.cta-banner .btn-outline:hover{ background:#fff; color:var(--color-primary-dark); }
+
+/* =========================================================
+   Footer
+========================================================= */
+.site-footer{
+  background: var(--color-deep);
+  color: var(--color-deep-ink);
+  padding: 56px 0 28px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 32px;
+  padding-bottom: 32px;
+}
+@media (max-width:900px){ .footer-grid{ grid-template-columns: 1fr 1fr; } }
+.footer-grid h4{ color: var(--color-marigold); font-size:1rem; margin-bottom:14px; }
+.footer-grid ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+.footer-grid a:hover{ color: var(--color-marigold); }
+.footer-bottom{
+  border-top: 1px solid rgba(243,230,216,.15);
+  padding-top: 20px;
+  font-size:.85rem;
+  color: rgba(243,230,216,.7);
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+
+/* =========================================================
+   Book Pandit — Modal Form (shared across all pages)
+========================================================= */
+.modal-overlay{
+  position:fixed; inset:0;
+  background: rgba(43,27,20,.55);
+  display:none;
+  align-items:center; justify-content:center;
+  padding: 20px;
+  z-index: 100;
+}
+.modal-overlay.open{ display:flex; }
+
+.modal{
+  background: var(--color-card);
+  border-radius: var(--radius-md);
+  max-width: 520px;
+  width:100%;
+  max-height: 90vh;
+  overflow-y:auto;
+  padding: 32px;
+  position:relative;
+}
+.modal-close{
+  position:absolute; top:16px; right:16px;
+  background:none; border:none; font-size:1.4rem; cursor:pointer; color: var(--color-ink-soft);
+  line-height:1;
+  padding: 6px;
+}
+.modal h2{ font-size:1.6rem; margin-bottom:.2em; }
+.modal .lede{ color: var(--color-ink-soft); margin-bottom: 22px; }
+
+.form-row{ margin-bottom: 16px; display:flex; flex-direction:column; gap:6px; }
+.form-row label{ font-weight:700; font-size:.88rem; }
+.form-row input, .form-row select, .form-row textarea{
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  color: var(--color-ink);
+}
+.form-row input:focus, .form-row select:focus, .form-row textarea:focus{
+  border-color: var(--color-gold);
+}
+.form-two{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:520px){ .form-two{ grid-template-columns:1fr; } }
+
+.form-status{
+  margin-top: 10px;
+  font-size: .92rem;
+  font-weight:600;
+  min-height: 1.4em;
+}
+.form-status[data-state="success"]{ color: #3D7A3B; }
+.form-status[data-state="error"]{ color: var(--color-primary); }
+
+.btn-submit{ width:100%; margin-top:6px; }
+.btn-submit[disabled]{ opacity:.65; cursor:not-allowed; }
