@@ -155,6 +155,9 @@ select:focus-visible, textarea:focus-visible{
   box-shadow: 0 12px 30px rgba(43,27,20,.12);
   min-width: 230px;
   padding: 8px;
+  max-height: 70vh;
+  overflow-y:auto;
+  overflow-x:hidden;
 }
 .has-dropdown:hover .dropdown,
 .has-dropdown:focus-within .dropdown{ display:block; }
@@ -259,12 +262,12 @@ select:focus-visible, textarea:focus-visible{
   background: var(--color-gold);
 }
 .hero-arch img{
-  width:100%; height:100%; object-fit:cover;
+  width:94%; height:80%; object-fit:cover;
 }
 .hero-arch::after{
   content:"";
   position:absolute; inset:0;
-  box-shadow: inset 0 0 0 10px var(--color-bg), inset 0 0 0 16px var(--color-gold);
+  box-shadow: inset 0 0 0 10px var(--color-bg), inset 57 0 0 0px var(--color-gold);
   pointer-events:none;
 }
 
@@ -449,3 +452,29 @@ select:focus-visible, textarea:focus-visible{
 
 .btn-submit{ width:100%; margin-top:6px; }
 .btn-submit[disabled]{ opacity:.65; cursor:not-allowed; }
+.about{
+  
+.site-footer{
+  background: var(--color-deep);
+  color: var(--color-deep-ink);
+  padding: 56px 0 28px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 32px;
+  padding-bottom: 32px;
+}
+@media (max-width:900px){ .footer-grid{ grid-template-columns: 1fr 1fr; } }
+.footer-grid h4{ color: var(--color-marigold); font-size:1rem; margin-bottom:14px; }
+.footer-grid ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+.footer-grid a:hover{ color: var(--color-marigold); }
+.footer-bottom{
+  border-top: 1px solid rgba(243,230,216,.15);
+  padding-top: 20px;
+  font-size:.85rem;
+  color: rgba(243,230,216,.7);
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+ 
+}
