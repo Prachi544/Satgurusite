@@ -68,8 +68,80 @@
 </header>
 
 <div class="garland-rule" aria-hidden="true"></div>
+</html>
 
+<!-- here -->
 
+<!-- =========================== BOOK PANDIT MODAL =========================== -->
+
+<section class="hero">
+   <div class="container hero-grid">
+    <div class="hero-copy">
+<!-- <div class="modal"> -->
+  <!-- <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"> -->
+    <!-- <button class="modal-close" data-close-booking aria-label="Close">&times;</button> -->
+    <h2 id="modal-title">Let's Arrange Your Puja</h2>
+    <p class="lede">Share a few details — the pandit is notified by email right away.</p>
+
+    <form id="booking-form" novalidate>
+      <div class="form-row">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-two">
+        <div class="form-row">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+        <div class="form-row">
+          <label for="email">Email (optional)</label>
+          <input type="email" id="email" name="email">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="puja-type">Puja Type</label>
+        <select id="puja-type" name="pujaType" required>
+          <option value="">Select a puja</option>
+          <option>Griha Pravesh Puja</option>
+          <option>Satyanarayan Katha</option>
+          <option>Havan / Yagna</option>
+          <option>Vivah (Marriage) Ceremony</option>
+          <option>Graha Shanti Puja</option>
+          <option>Festival Puja</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-two">
+      <div class="form-row">
+          <label for="date">Preferred Date</label>
+          <input type="date" id="date" name="date" required>
+        </div>
+        <div class="form-row">
+          <label for="city">City</label>
+          <input type="text" id="city" name="city">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="message">Anything else the pandit should know?</label>
+        <textarea id="message" name="message" rows="3"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-submit">Send Booking Request</button>
+      <p class="form-status" id="booking-status" role="status"></p>
+    </form>
+  </div>
+</div>
+<!-- last -->
+<div class="hero-arch">
+      <!-- Placeholder photo — swap with a real photo of the pandit performing a ceremony -->
+      <img src="../img/Home.jpeg" alt="Pandit performing a puja ceremony with sacred fire and offerings">
+    </div>
+  </div>
+    </section>
 
 <!-- =========================== FOOTER =========================== -->
 <footer class="site-footer">
