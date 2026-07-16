@@ -50,6 +50,18 @@
       <li><a href="donation.html" aria-current="page">Donation</a></li>
       <li><a href="contact.html">Contact Us</a></li>
     </ul>
+    <div id="google_translate_element" class="translate-hidden"></div>
+<select id="lang-select" class="lang-select" aria-label="Select language">
+  <option value="en">English</option>
+  <option value="hi">हिंदी</option>
+  <option value="gu">ગુજરાતી</option>
+  <option value="mr">मराठी</option>
+  <option value="ta">தமிழ்</option>
+  <option value="te">తెలుగు</option>
+  <option value="bn">বাংলা</option>
+  <option value="pa">ਪੰਜਾਬੀ</option>
+</select>
+    
 
     <button class="btn-book-nav" data-open-booking="">Book Pandit</button>
   </nav>
@@ -96,3 +108,108 @@
     </div>
   </div>
 </footer>
+<!-- =========================== BOOK PANDIT MODAL =========================== -->
+<div class="modal-overlay" id="book-modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" data-close-booking aria-label="Close">&times;</button>
+    <h2 id="modal-title">Book Your Pandit</h2>
+    <p class="lede">Share a few details — the pandit is notified by email right away.</p>
+
+    <form id="booking-form" novalidate>
+      <div class="form-row">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-two">
+        <div class="form-row">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+        <div class="form-row">
+          <label for="email">Email (optional)</label>
+          <input type="email" id="email" name="email">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="puja-type">Puja Type</label>
+        <select id="puja-type" name="pujaType" required>
+          <option value="">Select a puja</option>
+          <option>Griha Pravesh Puja</option>
+          <option>Satyanarayan Katha</option>
+          <option>Havan / Yagna</option>
+          <option>Vivah (Marriage) Ceremony</option>
+          <option>Graha Shanti Puja</option>
+          <option>Festival Puja</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-two">
+        <div class="form-row">
+          <label for="date">Preferred Date</label>
+          <input type="date" id="date" name="date" required>
+        </div>
+        <div class="form-row">
+          <label for="city">City</label>
+          <input type="text" id="city" name="city">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="message">Anything else the pandit should know?</label>
+        <textarea id="message" name="message" rows="3"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-submit">Send Booking Request</button>
+      <p class="form-status" id="booking-status" role="status"></p>
+    </form>
+  </div>
+</div>
+
+<script src="js/booking.js"></script>
+
+
+</body>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', includedLanguages: 'hi,en,gu,mr,ta,te,bn,pa', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+      'google_translate_element'
+    );
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var langSelect = document.getElementById('lang-select');
+    if (!langSelect) return;
+
+    // On page load, read the active language from the cookie
+    // so the dropdown shows the correct current selection
+    var match = document.cookie.match(/googtrans=\/en\/(\w+)/);
+    if (match && match[1]) {
+      langSelect.value = match[1];
+    }
+
+    langSelect.addEventListener('change', function () {
+      var lang = langSelect.value;
+
+      if (lang === 'en') {
+        // Clear the cookie to go back to original English
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + location.hostname;
+      } else {
+        // Set the cookie Google Translate reads on load
+        document.cookie = 'googtrans=/en/' + lang + '; path=/';
+      }
+
+      // Reload so translation applies cleanly from scratch —
+      // this avoids the "banner was closed" broken state entirely
+      location.reload();
+    });
+  });
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+</html>
