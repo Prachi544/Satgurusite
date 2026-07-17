@@ -123,7 +123,6 @@ app.post('/api/book-pandit', bookingLimiter, async (req, res) => {
 
     await transporter.sendMail(mailOptions);
 
-    // --- Optional: send a confirmation email back to the user ---
     if (email) {
       await transporter.sendMail({
         from: `"Panditji Online" <${process.env.EMAIL_USER}>`,
@@ -148,9 +147,6 @@ app.post('/api/book-pandit', bookingLimiter, async (req, res) => {
   }
 });
 
-/* ---------------------------------------------------------
-   Start server
---------------------------------------------------------- */
 app.listen(PORT, () => {
   console.log(`🚀 Panditji Online API running on http://localhost:${PORT}`);
 });

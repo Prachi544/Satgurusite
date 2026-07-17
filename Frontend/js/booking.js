@@ -1,11 +1,3 @@
-/* =========================================================
-   Panditji Online — shared front-end behaviour
-   1) Mobile nav toggle
-   2) Book Pandit modal (open / close / prefill puja type)
-   3) Form submit -> sends booking to backend, which emails
-      the pandit. Backend endpoint: POST /api/book-pandit
-      (Not built yet — see the note at the bottom of this file.)
-========================================================= */
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -94,13 +86,16 @@ document.addEventListener('DOMContentLoaded', function () {
       try {
         // TODO: replace with your live backend URL once deployed,
         // e.g. https://panditji-api.onrender.com/api/book-pandit
-        var response = await fetch('/api/book-pandit', {
+        var response = await fetch('http://localhost:5000/api/book-pandit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
 
-        if (!response.ok) throw new Error('Server responded with an error');
+        if (!response.ok) {
+          var errorData = await response.json().catch(function () { return {}; });
+          throw new Error(errorData.error || 'Server responded with an error');
+        }
 
         statusEl.dataset.state = 'success';
         statusEl.textContent = 'Request sent! The pandit has been notified and will contact you shortly.';
@@ -108,12 +103,9 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(closeModal, 2200);
 
       } catch (err) {
-        // Backend isn't live yet during early development —
-        // show a friendly demo confirmation instead of a hard error.
-        console.warn('Booking API not reachable yet:', err.message);
-        statusEl.dataset.state = 'success';
-        statusEl.textContent = 'Request received (demo mode — connect the backend to send real emails).';
-        form.reset();
+        console.error('Booking error:', err);
+        statusEl.dataset.state = 'error';
+        statusEl.textContent = err.message || 'Something went wrong. Please check your connection and try again.';
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send Booking Request';
