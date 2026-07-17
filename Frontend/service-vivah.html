@@ -50,6 +50,17 @@
       <li><a href="donation.html">Donation</a></li>
       <li><a href="contact.html">Contact Us</a></li>
     </ul>
+    <div id="google_translate_element" class="translate-hidden"></div>
+<select id="lang-select" class="lang-select" aria-label="Select language">
+  <option value="en">English</option>
+  <option value="hi">हिंदी</option>
+  <option value="gu">ગુજરાતી</option>
+  <option value="mr">मराठी</option>
+  <option value="ta">தமிழ்</option>
+  <option value="te">తెలుగు</option>
+  <option value="bn">বাংলা</option>
+  <option value="pa">ਪੰਜਾਬੀ</option>
+</select>
 
     <button class="btn-book-nav" data-open-booking="Griha Pravesh Puja">Book Pandit</button>
   </nav>
@@ -273,4 +284,42 @@
 
 <script src="js/booking.js"></script>
 </body>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', includedLanguages: 'hi,en,gu,mr,ta,te,bn,pa', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+      'google_translate_element'
+    );
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var langSelect = document.getElementById('lang-select');
+    if (!langSelect) return;
+
+    // On page load, read the active language from the cookie
+    // so the dropdown shows the correct current selection
+    var match = document.cookie.match(/googtrans=\/en\/(\w+)/);
+    if (match && match[1]) {
+      langSelect.value = match[1];
+    }
+
+    langSelect.addEventListener('change', function () {
+      var lang = langSelect.value;
+
+      if (lang === 'en') {
+        // Clear the cookie to go back to original English
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + location.hostname;
+      } else {
+        // Set the cookie Google Translate reads on load
+        document.cookie = 'googtrans=/en/' + lang + '; path=/';
+      }
+
+      // Reload so translation applies cleanly from scratch —
+      // this avoids the "banner was closed" broken state entirely
+      location.reload();
+    });
+  });
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </html>
