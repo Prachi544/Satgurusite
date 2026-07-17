@@ -125,7 +125,7 @@ app.post('/api/book-pandit', bookingLimiter, async (req, res) => {
 
     if (email) {
       await transporter.sendMail({
-        from: `"Panditji Online" <${process.env.EMAIL_USER}>`,
+        from: `"Vaishnavacharya Sagar" <${process.env.EMAIL_USER}>`,
         to: email,
         subject: `Booking Received — ${pujaTypeSafe}`,
         html: `
@@ -133,7 +133,7 @@ app.post('/api/book-pandit', bookingLimiter, async (req, res) => {
             <h2 style="color:#B23A2E;">Thank you, ${nameSafe}!</h2>
             <p>We've received your request for <strong>${pujaTypeSafe}</strong> on <strong>${escapeHtml(date)}</strong>.</p>
             <p>The pandit has been notified and will contact you shortly at ${escapeHtml(phone)} to confirm details.</p>
-            <p style="color:#6B564C; font-size:.9em; margin-top:24px;">— Panditji Online</p>
+            <p style="color:#6B564C; font-size:.9em; margin-top:24px;">— Vaishnavacharya Sagar</p>
           </div>
         `,
       });

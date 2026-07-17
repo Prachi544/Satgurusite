@@ -549,3 +549,37 @@ select:focus-visible, textarea:focus-visible{
 body{ top: 0px !important; position: static !important; }
 .goog-tooltip, .goog-tooltip:hover{ display:none !important; }
 .goog-text-highlight{ background:none !important; box-shadow:none !important; }
+
+/* =========================================================
+   Gallery
+========================================================= */
+.gallery-section{
+    padding: 60px 8%;
+    background:#ffff;
+    text-align:center
+}
+
+.gallery-section h2{
+    font-size:36px;
+    margin-bottom: 30px;
+    color:#8B4513;
+}
+
+.gallery{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery img{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.gallery img:hover{
+    transform: scale(1.05);
+}
