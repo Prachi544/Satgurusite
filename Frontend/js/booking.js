@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
       try {
         // TODO: replace with your live backend URL once deployed,
         // e.g. https://panditji-api.onrender.com/api/book-pandit
-        var response = await fetch('http://localhost:5000/api/book-pandit', {
+        var response = await fetch('https://backend-39jo.onrender.com/api/book-pandit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
