@@ -457,6 +457,17 @@ select:focus-visible, textarea:focus-visible{
   display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
 }
 
+.developer a {
+     color: white;
+     text-decoration: none;
+     font-weight: 600;
+}
+
+.developer a:hover {
+     color: var(--color-marigold);
+     text-decoration: underline;
+}
+
 /* =========================================================
    Book Pandit — Modal Form (shared across all pages)
 ========================================================= */
