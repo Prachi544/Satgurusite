@@ -10,28 +10,19 @@ const PORT = process.env.PORT || 5000;
 
 app.set("trust proxy", 1);
 
-/* ---------------------------------------------------------
-   Middleware
---------------------------------------------------------- */
+// Middleware
 app.use(express.json());
-
-// Only allow requests from your actual frontend (set in .env)
 app.use(cors({
   origin: process.env.FRONTEND_URL || '*',
   methods: ['POST', 'GET'],
 }));
 
-// Basic protection against spam/abuse: max 10 booking requests
-// per 15 minutes, per IP address.
 const bookingLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
   message: { error: 'Too many booking requests. Please try again later.' },
 });
 
-/* ---------------------------------------------------------
-   Email transporter (Gmail SMTP via Nodemailer)
---------------------------------------------------------- */
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -40,8 +31,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Verify the email connection on startup so problems show up
-// immediately in the terminal, not on the first real booking.
 transporter.verify((err) => {
   if (err) {
     console.error('❌ Email transporter error:', err.message);
@@ -51,9 +40,6 @@ transporter.verify((err) => {
   }
 });
 
-/* ---------------------------------------------------------
-   Helpers
---------------------------------------------------------- */
 function escapeHtml(str = '') {
   return String(str)
     .replace(/&/g, '&amp;')
@@ -66,21 +52,14 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-/* ---------------------------------------------------------
-   Routes
---------------------------------------------------------- */
 
-// Health check — useful to confirm the server is alive after deploying
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Panditji Online API is running.' });
 });
-
-// Main booking endpoint
 app.post('/api/book-pandit', bookingLimiter, async (req, res) => {
   try {
     const { name, phone, email, pujaType, date, city, message } = req.body;
 
-    // --- Validation ---
     if (!name || !phone || !pujaType || !date) {
       return res.status(400).json({
         error: 'Please provide name, phone, puja type, and date.',
@@ -93,7 +72,6 @@ app.post('/api/book-pandit', bookingLimiter, async (req, res) => {
       return res.status(400).json({ error: 'Please provide a valid phone number.' });
     }
 
-    // --- Build the email to the pandit ---
     const pujaTypeSafe = escapeHtml(pujaType);
     const nameSafe = escapeHtml(name);
     const citySafe = escapeHtml(city || 'Not specified');

@@ -1,7 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  /* ---------- Mobile nav toggle ---------- */
   var navToggle = document.querySelector('.nav-toggle');
   var navLinks = document.querySelector('.nav-links');
   if (navToggle && navLinks) {
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---------- Book Pandit modal ---------- */
   var overlay = document.getElementById('book-modal');
   var openButtons = document.querySelectorAll('[data-open-booking]');
   var closeButtons = document.querySelectorAll('[data-close-booking]');
@@ -53,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---------- Form submit ---------- */
   var form = document.getElementById('booking-form');
   var statusEl = document.getElementById('booking-status');
 
@@ -84,8 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
       statusEl.textContent = '';
 
       try {
-        // TODO: replace with your live backend URL once deployed,
-        // e.g. https://panditji-api.onrender.com/api/book-pandit
         var response = await fetch('https://backend-39jo.onrender.com/api/book-pandit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

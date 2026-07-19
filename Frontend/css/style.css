@@ -1,30 +1,24 @@
-/* =========================================================
-   Panditji Online — Shared Stylesheet
-   Design tokens live at the top. Change once, apply everywhere.
-========================================================= */
+
 
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Tiro+Devanagari+Hindi&family=Karla:wght@400;500;600;700&display=swap');
 
 :root{
-  /* --- Color tokens --- */
-  --color-bg:        #FBF6EC; /* sandalwood ivory page background */
-  --color-card:      #FFFDF8; /* slightly lighter card surface */
-  --color-ink:       #2B1B14; /* deep temple-wood, primary text */
-  --color-ink-soft:  #6B564C; /* softened brown for secondary text */
-  --color-primary:   #B23A2E; /* sindoor red — main accent / CTAs */
+  --color-bg:        #FBF6EC; /* page background */
+  --color-card:      #FFFDF8; /* card surface */
+  --color-ink:       #2B1B14; /* primary text */
+  --color-ink-soft:  #6B564C; /* secondary text */
+  --color-primary:   #B23A2E; /* main accent */
   --color-primary-dark:#8C2C22;
-  --color-gold:      #C68A1D; /* turmeric gold — secondary accent */
-  --color-marigold:  #E8862E; /* marigold orange — highlights */
-  --color-deep:       #3B1220; /* deep maroon-plum — dark bands, footer */
+  --color-gold:      #C68A1D; /* secondary accent */
+  --color-marigold:  #E8862E; /*  highlights */
+  --color-deep:       #3B1220; /* dark bands, footer */
   --color-deep-ink:   #F3E6D8; /* text on dark bands */
   --color-border:     #E7DCC8;
 
-  /* --- Type tokens --- */
   --font-display: 'Marcellus', 'Georgia', serif;
   --font-devanagari: 'Tiro Devanagari Hindi', serif;
   --font-body: 'Karla', -apple-system, sans-serif;
 
-  /* --- Layout tokens --- */
   --max-width: 1180px;
   --radius-sm: 6px;
   --radius-md: 14px;
@@ -74,7 +68,6 @@ h1,h2,h3,h4{
 
 p{ margin:0 0 1em; }
 
-/* Visible keyboard focus everywhere */
 a:focus-visible, button:focus-visible, input:focus-visible,
 select:focus-visible, textarea:focus-visible{
   outline: 3px solid var(--color-gold);
@@ -85,10 +78,6 @@ select:focus-visible, textarea:focus-visible{
   *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior:auto !important; }
 }
 
-/* =========================================================
-   Marigold garland rule — thin decorative divider, our
-   recurring signature motif (a strung garland, not a line)
-========================================================= */
 .garland-rule{
   width:100%;
   height: 14px;
@@ -99,9 +88,6 @@ select:focus-visible, textarea:focus-visible{
   opacity: .8;
 }
 
-/* =========================================================
-   Header / Navigation
-========================================================= */
 .site-header{
   position: sticky; top:0; z-index: 50;
   background: rgba(251,246,236,.92);
@@ -199,9 +185,6 @@ select:focus-visible, textarea:focus-visible{
   .has-dropdown:hover .dropdown, .has-dropdown:focus-within .dropdown{ display:block; }
 }
 
-/* =========================================================
-   Hero — arch (torana) frame, our signature shape
-========================================================= */
 .hero{
   position:relative;
   padding: 64px 0 40px;
@@ -254,7 +237,6 @@ select:focus-visible, textarea:focus-visible{
 }
 .trust-row strong{ display:block; color:var(--color-ink); font-family: var(--font-display); font-size:1.3rem; }
 
-/* The arch frame itself */
 .hero-arch{
   position:relative;
   clip-path: path('M0,400 L0,140 C0,60 60,0 150,0 L150,0 C240,0 300,60 300,140 L300,400 Z');
@@ -304,8 +286,6 @@ select:focus-visible, textarea:focus-visible{
 
 .trust-row strong{ display:block; color:var(--color-ink); font-family: var(--font-display); font-size:1.3rem; }
 
-
-/* second page */
 .hero-arch2{
   position:relative;
   clip-path: path('M0,400 L0,140 C0,0 0,0 150,0 L150,0 C240,0 300,0 300,140 L300,400 Z');
@@ -334,9 +314,6 @@ select:focus-visible, textarea:focus-visible{
 .trust-row strong{ display:block; color:var(--color-ink); font-family: var(--font-display); font-size:1.3rem; }
 
 
-/* =========================================================
-   Section scaffolding
-========================================================= */
 .section{ padding: 72px 0; }
 .section-deep{
   background: var(--color-deep);
@@ -351,9 +328,6 @@ select:focus-visible, textarea:focus-visible{
 }
 .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
 
-/* =========================================================
-   Cards — services / features
-========================================================= */
 .grid{
   display:grid;
   gap: 26px;
@@ -387,7 +361,6 @@ select:focus-visible, textarea:focus-visible{
   object-fit: cover;
   object-position: center;
 }
-/* .service-card.thumb img{ width:100%; height:100%; object-fit:contain; object-position: center; background: #fff; } */
 .service-card h3{ font-size:1.25rem; }
 .service-card .tag{
   font-size:.78rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
@@ -404,9 +377,6 @@ select:focus-visible, textarea:focus-visible{
   padding: 9px 18px; font-size:.9rem;
 }
 
-/* =========================================================
-   Testimonials
-========================================================= */
 .testimonial{
   background: var(--color-card);
   border-left: 4px solid var(--color-gold);
@@ -416,9 +386,6 @@ select:focus-visible, textarea:focus-visible{
 .testimonial p{ font-style: italic; color: var(--color-ink-soft); }
 .testimonial .who{ font-weight:700; font-style:normal; color:var(--color-ink); }
 
-/* =========================================================
-   CTA banner
-========================================================= */
 .cta-banner{
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   color:#fff;
@@ -431,9 +398,6 @@ select:focus-visible, textarea:focus-visible{
 .cta-banner .btn-outline{ border-color:#fff; color:#fff; }
 .cta-banner .btn-outline:hover{ background:#fff; color:var(--color-primary-dark); }
 
-/* =========================================================
-   Footer
-========================================================= */
 .site-footer{
   background: var(--color-deep);
   color: var(--color-deep-ink);
@@ -468,9 +432,6 @@ select:focus-visible, textarea:focus-visible{
      text-decoration: underline;
 }
 
-/* =========================================================
-   Book Pandit — Modal Form (shared across all pages)
-========================================================= */
 .modal-overlay{
   position:fixed; inset:0;
   background: rgba(43,27,20,.55);
@@ -529,9 +490,6 @@ select:focus-visible, textarea:focus-visible{
 .btn-submit{ width:100%; margin-top:6px; }
 .btn-submit[disabled]{ opacity:.65; cursor:not-allowed; }
 
-/* =========================================================
-   Google Translate widget — custom dropdown in header
-========================================================= */
 .translate-hidden{ display:none !important; }
 
 .lang-select{
@@ -550,9 +508,7 @@ body{ top: 0px !important; position: static !important; }
 .goog-tooltip, .goog-tooltip:hover{ display:none !important; }
 .goog-text-highlight{ background:none !important; box-shadow:none !important; }
 
-/* =========================================================
-   Gallery
-========================================================= */
+/* gallery section */
 .gallery-section{
     padding: 60px 8%;
     background:#ffff;
