@@ -3,7 +3,7 @@ services:
     name: panditji-backend
     runtime: node
     plan: free
-    region: singapore
+    region: Ohio (US East)
     rootDir: Backend
     buildCommand: npm install
     startCommand: npm start
