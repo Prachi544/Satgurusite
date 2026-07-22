@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
@@ -23,25 +23,16 @@ const bookingLimiter = rateLimit({
   message: { error: 'Too many booking requests. Please try again later.' },
 });
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  family: 4, // force IPv4 — Render's network can't reach Gmail over IPv6
-});
+// --- Resend client (replaces Nodemailer/Gmail SMTP) ---
+// Sends email over HTTPS, so it isn't affected by SMTP port
+// blocking or IPv6 routing issues on hosts like Render.
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-transporter.verify((err) => {
-  if (err) {
-    console.error('❌ Email transporter error:', err.message);
-    console.error('   Check EMAIL_USER / EMAIL_PASS in your .env file.');
-  } else {
-    console.log('✅ Email transporter ready.');
-  }
-});
+if (!process.env.RESEND_API_KEY) {
+  console.error('❌ RESEND_API_KEY is missing — email sending will fail.');
+} else {
+  console.log('✅ Resend client configured.');
+}
 
 function escapeHtml(str = '') {
   return String(str)
@@ -55,10 +46,10 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Panditji Online API is running.' });
 });
+
 app.post('/api/book-pandit', bookingLimiter, async (req, res) => {
   try {
     const { name, phone, email, pujaType, date, city, message } = req.body;
@@ -80,8 +71,13 @@ app.post('/api/book-pandit', bookingLimiter, async (req, res) => {
     const citySafe = escapeHtml(city || 'Not specified');
     const messageSafe = escapeHtml(message || 'None');
 
-    const mailOptions = {
-      from: `"Panditji Online" <${process.env.EMAIL_USER}>`,
+    // --- Email to the pandit ---
+    const pandiEmailResult = await resend.emails.send({
+      // "onboarding@resend.dev" works immediately with no setup, but
+      // Resend stamps their own name on it. Once you verify your own
+      // domain in the Resend dashboard, switch this to something like
+      // "Panditji Online <bookings@yourdomain.com>".
+      from: 'Panditji Online <onboarding@resend.dev>',
       to: process.env.PANDIT_EMAIL,
       replyTo: email || undefined,
       subject: `New Booking Request: ${pujaTypeSafe} — ${nameSafe}`,
@@ -102,13 +98,16 @@ app.post('/api/book-pandit', bookingLimiter, async (req, res) => {
           </p>
         </div>
       `,
-    };
+    });
 
-    await transporter.sendMail(mailOptions);
+    if (pandiEmailResult.error) {
+      throw new Error(pandiEmailResult.error.message || 'Failed to send booking email to pandit.');
+    }
 
+    // --- Confirmation email to the customer (optional) ---
     if (email) {
-      await transporter.sendMail({
-        from: `"Vaishnavacharya Sagar" <${process.env.EMAIL_USER}>`,
+      const customerEmailResult = await resend.emails.send({
+        from: 'Vaishnavacharya Sagar <onboarding@resend.dev>',
         to: email,
         subject: `Booking Received — ${pujaTypeSafe}`,
         html: `
@@ -120,6 +119,12 @@ app.post('/api/book-pandit', bookingLimiter, async (req, res) => {
           </div>
         `,
       });
+
+      // Don't fail the whole request if only the customer confirmation
+      // email has trouble — the pandit already got notified either way.
+      if (customerEmailResult.error) {
+        console.warn('Customer confirmation email failed:', customerEmailResult.error.message);
+      }
     }
 
     res.status(200).json({ success: true, message: 'Booking request sent successfully.' });
