@@ -77,7 +77,7 @@ app.post('/api/book-pandit', bookingLimiter, async (req, res) => {
       // Resend stamps their own name on it. Once you verify your own
       // domain in the Resend dashboard, switch this to something like
       // "Panditji Online <bookings@yourdomain.com>".
-      from: 'Panditji Online <onboarding@resend.dev>',
+      from: 'Panditji Online <bookings@vedikpandit.online>',
       to: process.env.PANDIT_EMAIL,
       replyTo: email || undefined,
       subject: `New Booking Request: ${pujaTypeSafe} — ${nameSafe}`,
